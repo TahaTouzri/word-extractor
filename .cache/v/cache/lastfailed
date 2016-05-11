@@ -1,1 +1,3 @@
-{}
+{
+  "test_utils.py::test_isItAfterSpecificWord": true
+}

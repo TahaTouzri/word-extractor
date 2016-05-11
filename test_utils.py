@@ -13,8 +13,8 @@ def test_isItBeforeSpecificWord():
 	
 	
 def test_isItAfterSpecificWord():
-	assert isItAfterSpecificWord("word","specificWord",["specificWord","word"])
-	assert not isItAfterSpecificWord("word","specificWord",["NOTspecificWord","word"])
+	assert isItAfterSpecificWord("word1","specificWord",["specificWord","word"]), "isItAfterSpecificWord function failed in positive test"
+	assert not isItAfterSpecificWord("word","specificWord",["specificWord","word"]),"isItAfterSpecificWord function failed in negative test"
 	
 	
 def test_isItBeforeAwordThatStartsWithANumber():
