@@ -1,7 +1,7 @@
 # word-extractor
 This is an implementation of an algorithm invented by me its purpose is to extract specific word from phrases.
 #example of usage
-1-learn the algorithm:
+1-learn the algorithm:<br>
   -delete the learnedModel.p file from the project folder
   -create a learn.txt file containing the learning set
   -example of learn.txt:
