@@ -5,9 +5,11 @@ This is an implementation of an algorithm invented by me its purpose is to extra
 &nbsp;-delete the learnedModel.p file from the project folder<br>
 &nbsp;-create a learn.txt file containing the learning set<br>
 &nbsp;-example of learn.txt:<br>
+<i>
 &nbsp;&nbsp;my name is Taha#is<br>
 &nbsp;&nbsp;this is an open source project#is<br>
 &nbsp;&nbsp;I have three systers#have<br>
+</i>
 &nbsp;-with the previous example the algorithm will extract verbs from phrases you deliver with<br>
 &nbsp;-start python learn.py learn.txt<br>
   <br>
