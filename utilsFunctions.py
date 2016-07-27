@@ -12,13 +12,13 @@ def split_composite(w):
 		return [s.lower() for s in m]
 	except:
 		return []
-	
+
 def isItBeforeSpecificWord(word,specificWord,wordsList):
 	for i in xrange(len(wordsList)-1):
 		if (wordsList[i].lower()==word.lower())and(wordsList[i+1].lower()==specificWord.lower()):
 			return True
 	return False
-	
+
 def isItAfterSpecificWord(word,specificWord,wordsList):
 	for i in xrange(len(wordsList)-1):
 		if (wordsList[i].lower()==specificWord.lower())and(wordsList[i+1].lower()==word.lower()):
@@ -33,7 +33,7 @@ def isItBeforeAwordThatStartsWithANumber(word,wordsList):
 			return False
 	except:
 		return False
-		
+
 def isItAfterAwordThatStartsWithANumber(word,wordsList):
 	try:
 		nextWord = wordsList[wordsList.index(word)-1]
@@ -57,19 +57,19 @@ def isItStartsWithANumber(word):
 		return word[0].isdigit()
 	except:
 		return False
-	
+
 def doesItContainANumber(word):
 	return any(char.isdigit() for char in word)
-	
+
 
 def isItContainOneWord(word):
 	l = split_composite(word)
 	return len(l)==1
 
-	
+
 def doesItStartsWithUpperCase(word):
 	return word[0].upper()==word[0]
-	
+
 def isItANoun(word,text):
 	significantText = nltk.word_tokenize(text)
 	result          = nltk.pos_tag(significantText)
@@ -93,19 +93,37 @@ def isItAVerb(word,text):
 		if i[0].lower()==word.lower() and i[1]=="VB":
 			return True
 	return False
-	
+
 def whatIsTheRelativePositionOfTheWord(word,text):
 	l=split_composite(text)
 	l1=split_composite(word)
 	return float(l.index(l1[0])+1)/len(l)
-	
+
 def isItAColor(word):
 	global colorsList
 	if word.lower().rstrip() in colorsList:
 		return True
 	else:
 		return False
-		
+#------------------------------------------------------
+#            The highest level extract function
+#------------------------------------------------------
+def extractMyWord(text,learnedModel):
+	listOfWords = split_composite(text)
+	words = []
+	#Create words objects
+	for word in listOfWords:
+		words.append(wordClass(text,word))
+	bestScore = 0
+	MyWord    = ""
+	for word in words:
+		for MyTypicalWord in learnedModel:
+			if word.getList() == MyTypicalWord.getList():
+				if MyTypicalWord.getScore()>bestScore:
+					bestScore = MyTypicalWord.getScore()
+					MyWord    = word
+	return listOfWords[words.index(MyWord)]
+
 #-------------------------------------------------------
 #            		Word Class
 #-------------------------------------------------------
@@ -142,7 +160,7 @@ class wordClass():
 		return self.score
 	def getWord(self):
 		return self.word
-	#This function mesure the distance, this function is used only during learning 
+	#This function mesure the distance, this function is used only during learning
 	def isItLooksLikeMe(self,wordCharc):
 		if self.getList() == wordCharc.getList() and self.getIsItMyWord()==wordCharc.getIsItMyWord():
 			self.score+=1
