@@ -1,1 +1,106 @@
-learn
+<!doctype html>
+<html>
+<body>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
+<script src="http://malsup.github.com/jquery.form.js"></script>
+<script src="static/javascript/javaScriptUpdater.js"></script>
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+      <title>Upload new File</title>
+      <h1>Upload new learn File</h1>
+      <div class="alert alert-info">
+        <strong>Info!</strong> The learn file should be in a particular form. each line should contain only one phrase and the word you are expecting
+        the algorithm to extract seperated by the # symbol. Here is an example of learn file you can download it.
+      </div>
+      <form action="learn.html" method="post" id="upload_file" enctype=multipart/form-data>
+        <table>
+          <tr>
+            <td><input type=file name=file></td>
+            <td><input type=submit value=Upload></td>
+          </tr>
+        </table>
+      </form>
+      <div class="progress">
+        <div class="progress-bar" id="upload_bar"></div>
+      </div>
+      <div id ="status"></div>
+
+      <div id="verification-process">
+          <div class="progress">
+              <div class="progress-bar" id="file_verification_bar" style="width: 0%;"></div>
+          </div>
+          <input type=submit value="Verify file" onclick="start_verification();">
+      </div>
+
+      <div id="generation_process">
+        <div class="progress">
+            <div class="progress-bar" id="model_generation_bar" style="width: 0%;"></div>
+        </div>
+        <input type=submit value="Generate new model" onclick="sse_updater('#model_generation_bar','/generation_stream');">
+      </div>
+
+  </div>
+</div>
+
+<script>
+var event_run = false;
+//hide div
+function show_div()
+{
+  if(!event_run)
+  {
+    $("#generation_process").show();
+  }
+}
+
+function start_verification()
+{
+  event_run=true;
+  sse_updater('#file_verification_bar','/verification_stream');
+  //event_run = false;
+  setInterval(show_div,250);
+}
+
+$("#verification-process").hide();
+$("#generation_process").hide();
+$(function() {
+
+    var bar = $('#upload_bar');
+    var status = $('#status');
+
+    $('#upload_file').ajaxForm({
+        beforeSend: function() {
+            status.empty();
+            var percentVal = '0%';
+            bar.width(percentVal);
+        },
+        uploadProgress: function(event, position, total, percentComplete) {
+            var percentVal = percentComplete + '%';
+            bar.width(percentVal);
+        },
+        complete: function(xhr) {
+          var obj = jQuery.parseJSON(xhr.responseText);
+          if(obj.hasOwnProperty('error'))
+          {
+            status.html('<div class="alert alert-danger">'+obj.error+"</div>");
+          }
+          else
+          {
+          status.html('<div class="alert alert-success">'+obj.info+"</div>");
+          $("#verification-process").show();
+          }
+        }
+    });
+});
+
+</script>
+
+
+
+
+</body>
+</html>

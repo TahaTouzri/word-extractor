@@ -2,7 +2,7 @@ import string
 import re
 import nltk
 from nltk.corpus import wordnet as wn
-
+import pickle
 #-------------------------------------------------------
 #            Functions used by the Model finder
 #-------------------------------------------------------
@@ -123,6 +123,55 @@ def extractMyWord(text,learnedModel):
 					bestScore = MyTypicalWord.getScore()
 					MyWord    = word
 	return listOfWords[words.index(MyWord)]
+#-------------------------------------------------------
+#    the function used to build the new learning model
+#-------------------------------------------------------
+
+def learnAlgorithm(textSourceFilePath):
+	print "in learn algorithm function"
+	textSourceFile = open(textSourceFilePath,'r')
+	lines = textSourceFile.readlines()
+	listWords=[]
+	normalizationFactor = 0
+	i=0
+	print i
+	print lines
+	for line in lines:
+		i+=1
+		print line
+		print  i
+		m = re.split('#', line)
+		everyWord = split_composite(m[0])
+
+		word = wordClass(m[0],m[1].rstrip())
+		word.setIsItMyWord(True)
+		#print word
+		#raw_input("continue ...")
+		save = True
+		for savedWord in listWords:
+			if savedWord.isItLooksLikeMe(word):
+				save = False
+				break
+		if save:
+			listWords.append(word)
+		ev   = ServerSentEvent(str((float(i)/len(lines))*100)[0:4])
+		print str((float(i)/len(lines))*100)
+		yield ev.encode()
+	ev   = ServerSentEvent(str("end"))
+	yield ev.encode()
+
+	textSourceFile.close()
+	learnedModel=open( "learnedModel.p", "wb" )
+	print "--------------------------------"
+	print "learning results"
+	print "--------------------------------"
+	for word in listWords:
+		word.normalizeScore(len(lines))
+		pickle.dump(word,learnedModel)
+		if word.getIsItMyWord():
+			print word
+
+	learnedModel.close()
 
 #-------------------------------------------------------
 #            		Word Class
@@ -171,3 +220,22 @@ class wordClass():
 		self.isItMyWord = isItMyWord
 	def getIsItMyWord(self):
 		return self.isItMyWord
+#--------------------------------------------------------------
+#                               Data Structure class
+#--------------------------------------------------------------
+class ServerSentEvent(object):
+	def __init__(self, data):
+		self.data = data
+		self.event = None
+		self.id = None
+		self.desc_map = {
+			self.data : "data",
+			self.event : "event",
+			self.id : "id"
+		}
+
+	def encode(self):
+		if not self.data:
+			return ""
+		lines = ["%s: %s" % (v, k) for k, v in self.desc_map.iteritems() if k]
+		return "%s\n\n" % "\n".join(lines)

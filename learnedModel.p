@@ -8,7 +8,7 @@ S'FreeLander PD10 3G Pro MTK6577 8GB GPS 7 Inch Tablet PC HD Screen Android 4.0 
 p3
 sS'score'
 p4
-F0.7885572139303483
+F0.7971360381861575
 sS'list'
 p5
 (lp6
@@ -39,7 +39,7 @@ S'XIAOMI Redmi Note 2 5.5\xe2\x80\x9d IPS MediaTek helio X10 Octa-Core 2GHz Andr
 p3
 sS'score'
 p4
-F0.05223880597014925
+F0.050119331742243436
 sS'list'
 p5
 (lp6
@@ -70,7 +70,7 @@ S'KingSing K2 MTK6572M, Dual-Core, 1.0GHz, 512M RAM+4G ROM, 4.3-inch WVGA Screen
 p3
 sS'score'
 p4
-F0.009950248756218905
+F0.00954653937947494
 sS'list'
 p5
 (lp6
@@ -101,7 +101,7 @@ S'Chuwi vi8 PLUS Intel X5 Cherry Trail Z8300 1.84GHz Quad Core 2GB RAM 32GB ROM 
 p3
 sS'score'
 p4
-F0.01990049751243781
+F0.016706443914081145
 sS'list'
 p5
 (lp6
@@ -132,7 +132,7 @@ S'ONEPLUS X Android 5.1 5.0 inch 4G Smartphone Qualcomm Snapdragon 801 Quad Core
 p3
 sS'score'
 p4
-F0.03980099502487562
+F0.03818615751789976
 sS'list'
 p5
 (lp6
@@ -163,7 +163,7 @@ S'Huion 420 4000 LPI Portable Smart Stylus Digital Signature Tablet with 3 Expre
 p3
 sS'score'
 p4
-F0.004975124378109453
+F0.00477326968973747
 sS'list'
 p5
 (lp6
@@ -194,7 +194,7 @@ S'Happy Cow 777-173 i-Helicopter Apple iDevices Controlled 3-Channel R/C Helicop
 p3
 sS'score'
 p4
-F0.0024875621890547263
+F0.002386634844868735
 sS'list'
 p5
 (lp6
@@ -225,7 +225,7 @@ S'Sparta 101D Tablet PC 10.1 Inch IPS HD Screen RK3066 Android 4.0 32GB Silver'
 p3
 sS'score'
 p4
-F0.029850746268656716
+F0.028639618138424822
 sS'list'
 p5
 (lp6
@@ -256,7 +256,7 @@ S'XUNRUIXING XRX-003 E27 3W 250lm 3000K 3-LED Warm White Light Bulb - White + Si
 p3
 sS'score'
 p4
-F0.0472636815920398
+F0.0477326968973747
 sS'list'
 p5
 (lp6
@@ -287,7 +287,7 @@ S'ThiEYE i30 1080P WiFi 3MP 155 Degree Wide Angle Action Camera Car DVR with 1.5
 p3
 sS'score'
 p4
-F0.0024875621890547263
+F0.002386634844868735
 sS'list'
 p5
 (lp6
@@ -318,7 +318,7 @@ S'FIREFLY 6S 4K WiFi Sport HD DV Camera'
 p3
 sS'score'
 p4
-F0.0024875621890547263
+F0.002386634844868735
 sS'list'
 p5
 (lp6
