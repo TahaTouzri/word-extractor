@@ -36,6 +36,8 @@
           <input type=submit value="Verify file" onclick="start_verification();">
       </div>
 
+      <div id="verification_msg"></div>
+
       <div id="generation_process">
         <div class="progress">
             <div class="progress-bar" id="model_generation_bar" style="width: 0%;"></div>
@@ -47,22 +49,35 @@
 </div>
 
 <script>
-var event_run = false;
+var get_event_msg_timer = null;
+var show_div_timer      = null;
 //hide div
 function show_div()
 {
   if(!event_run)
   {
     $("#generation_process").show();
+    clearInterval(show_div_timer);
   }
 }
 
+function get_event_msg()
+{
+  if(!event_run)
+  {
+    console.log(event_msg);
+    $("#verification_msg").html('<div class="alert alert-success">'+event_msg+'</div>');
+    clearInterval(get_event_msg_timer);
+  }
+
+}
 function start_verification()
 {
   event_run=true;
   sse_updater('#file_verification_bar','/verification_stream');
   //event_run = false;
-  setInterval(show_div,250);
+  show_div_timer=setInterval(show_div,250);
+  get_event_msg_timer=setInterval(get_event_msg,250);
 }
 
 $("#verification-process").hide();
@@ -98,9 +113,6 @@ $(function() {
 });
 
 </script>
-
-
-
 
 </body>
 </html>

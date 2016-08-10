@@ -3,6 +3,7 @@ var sse_tag_id        = null;
 var sse_event_source  = null;
 var next_operation    = null;
 var event_run         = false;
+var event_msg         = null;
 //this function is to change the active menu
 function sse_updater(tag_id,stream_url)
 {
@@ -29,9 +30,10 @@ function sseUpdateByID(tag_id,source)
 function sseUpdateDivOperation()
 {
 	event_run = true;
-  if (event.data =="end")
+  if (isNaN(event.data))
   {
     sse_event_source.close();
+		event_msg = event.data;
 		event_run = false;
   }
 	else

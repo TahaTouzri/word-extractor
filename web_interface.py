@@ -2,6 +2,7 @@ import nltk
 from utilsFunctions import *
 from nltk.corpus import wordnet as wn
 import pickle
+import re
 from flask import Flask, jsonify, Response, request,render_template, redirect, url_for
 from werkzeug.utils import secure_filename
 import sys
@@ -83,26 +84,42 @@ def upload_file():
             #return redirect(url_for('uploaded_file',filename=filename))
     return render_template("/learn.html",message_to_user=message_to_user,error_message=error_message)
 
-def file_verification():
-	for i in range(101):
-		time.sleep(0.1)
-		print i
-		ev   = ServerSentEvent(i)
+def file_verification(file_path):
+	file = open(file_path,'r')
+	lines = file.readlines()
+	i=0
+	there_is_error = False
+	for line in lines:
+		i+=1
+		print line
+		m = re.split('#', line)
+		if len(m)>=2:
+			pass
+		else:
+			there_is_error = True
+			break
+		ev   = ServerSentEvent(str((float(i)/len(lines))*100)[0:4])
 		yield ev.encode()
-	ev   = ServerSentEvent(str("end"))
-	yield ev.encode()
+	if there_is_error:
+		message = '{"error":"error @ '+str((float(i)/len(lines))*100)[0:4]+'"}'
+		ev   = ServerSentEvent(message)
+		yield ev.encode()
+	else:
+		message = '{"info":"File verifyed successfully"}'
+		ev   = ServerSentEvent(message)
+		yield ev.encode()
 
 @app.route('/verification_stream', methods=['GET', 'POST'])
 def verification_stream():
 	print "------------------------------------"
 	print "in the verification stream view"
-	return Response(file_verification(), mimetype="text/event-stream")
+	return Response(file_verification("./learn/learn.txt"), mimetype="text/event-stream")
 
 @app.route('/generation_stream', methods=['GET', 'POST'])
 def generation_stream():
 	print "------------------------------------"
 	print "in the generation stream view"
-	return Response(learnAlgorithm("learn.txt"), mimetype="text/event-stream")
+	return Response(learnAlgorithm("./learn/learn.txt"), mimetype="text/event-stream")
 
 if __name__ == "__main__":
 	app.debug = True
